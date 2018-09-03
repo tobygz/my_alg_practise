@@ -120,6 +120,40 @@ vector<vector<int> > updateMatrix(vector<vector<int> >& matrix) {
     return matrix;
 }
 
+vector<vector<int> > updateMatrix_std(vector<vector<int> >& matrix) {
+    int rows = matrix.size();
+    int clos = matrix[0].size();
+    vector<vector<int> > ret = matrix;
+    typedef pair<int, int> point;
+    queue<point> q;
+    for (int i=0; i<rows; i++) {
+        for (int j=0; j<clos; j++) {
+            if (matrix[i][j] == 0){ 
+                ret[i][j] = 0;
+                q.push(point(i,j));
+            }   
+            else 
+                ret[i][j] = -1; 
+        }   
+    }   
+    point d[4] = {point(-1,0),point(1,0),point(0,-1),point(0,1)};
+    while (q.size()) {
+        point temp = q.front();
+        q.pop();
+        int x = temp.first;
+        int y = temp.second;
+        for (int i=0; i<4; i++) {
+            int xx = x + d[i].first;
+            int yy = y + d[i].second;
+            if (xx>=0 && xx<rows && yy>=0 && yy<clos && ret[xx][yy]==-1) {
+                ret[xx][yy] = ret[x][y] + 1;
+                q.push(point(xx,yy));
+            }   
+        }   
+    }   
+    return ret;
+}
+
 int main(){
     int ary0[][5] = {{0,1,1,0,0},{0,1,1,0,0},{0,1,0,0,1},{1,1,1,1,0},{1,0,0,1,0}};
     int ary1[][10] = {{0,0,0,0,0,1,1,0,1,0},{0,1,1,1,1,1,1,1,1,0},{0,1,1,0,1,0,1,1,1,1},{1,1,1,0,1,1,1,1,0,0},{1,1,0,0,1,1,0,0,1,0},{1,1,1,0,0,1,1,0,1,1},{1,0,1,1,0,1,0,0,1,1},{0,0,1,1,0,1,0,1,0,1},{1,1,1,1,1,1,0,0,1,1},{0,1,1,0,0,1,0,1,1,1}};
@@ -186,6 +220,7 @@ int main(){
     }
     cout << "begin with matMax " << endl;
     updateMatrix(matMax);
+    updateMatrix_std(matMax);
 
     return 0;
 }
