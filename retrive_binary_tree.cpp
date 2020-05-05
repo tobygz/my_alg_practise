@@ -23,5 +23,31 @@ vector<vector<int>> levelOrder(TreeNode* root) {
 		ret.emplace_back( vec );
 	}
 	return ret;
+}
 
+void preTraverBin(TreeNode* root, vector<int>& ret){
+	if(root == NULL) return;
+	ret.push_back(root->val);
+	preTraverBin(root->left);
+	preTraverBin(root->right);
+}
+
+vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> ret;
+    stack<TreeNode*> st;
+    if(root == NULL){
+        return ret;
+    }
+    auto* p = root;
+    while( p || !st.empty()) {
+        while(p){
+            st.push( p );
+            ret.push_back( p->val );
+            p = p->left;
+        }
+        p = st.top();
+        st.pop();
+        p = p->right;
+    }
+    return ret;
 }
