@@ -22,7 +22,7 @@ int print_all(float floan, int iyear, float frate, map<int,int>& mp) {
 		//printf("month %d ratepaid: %f basepaid: %f leftbase: %f\n", i, fratePaid, fpaidBase, floan -  fpaidBase);
 
 		auto iter = mp.find(i);
-		if(iter != mp.end()){
+		if(iter != mp.end() && iter->second>0){
 			printf("\nmonth i: %d from base: %f cut base : %d \n", i, floan-fpaidBase, iter->second);
 			fpaidBase += iter->second;
 		}
@@ -59,6 +59,7 @@ int main()
 
 
 
+
 /*
 
 origin case:
@@ -66,8 +67,6 @@ rate paid total: 2897073.250000 paid month: 359
 
 month i: 24 from base: 2911574.250000 cut base : 300000 
 rate paid total: 2102288.250000 paid month: 293
-
-month i: 24 from base: 2911574.250000 cut base : 0 
 
 month i: 48 from base: 2813576.750000 cut base : 600000 
 rate paid total: 1704019.125000 paid month: 250
